@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier CréerSon — Textile personnalisé, imprimé ou brodé</title>
+  <meta name="description" content="T-shirts, sweats, tote bags, casquettes et plus, personnalisés à la demande : envoie ton logo ou décris ton idée, choisis la coupe, la matière et la technique (DTF, sérigraphie, broderie, flocage) et vois le rendu en direct.">
+  <meta name="theme-color" content="#f3efe6">
+  <meta property="og:title" content="Atelier CréerSon — Textile personnalisé, imprimé ou brodé">
+  <meta property="og:description" content="Personnalise tes textiles en direct : logo, texte, coupe, matière, broderie ou impression.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/og.png"><!-- à remplacer par l'adresse complète une fois le site en ligne, ex. https://atelier-creerson.fr/images/og.png -->
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='3' y='3' width='58' height='58' rx='14' fill='%23ff4d1f' stroke='%2317140f' stroke-width='5'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='36' fill='%2317140f'%3EC%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Archivo+Black&family=Bebas+Neue&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:ital,wght@1,700&family=Space+Grotesk:wght@700&family=Syne:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3">
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top">
+      <span class="logo"><i class="logo-script">Atelier</i><b class="logo-bold">CréerSon</b></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#process">Comment ça marche</a>
+      <a href="#techniques">Techniques</a>
+      <a href="#inspirations">Inspirations</a>
+      <a href="#studio">Studio</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-small" href="#studio"><span>Lancer mon projet</span></a>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow fade-up"><span class="sq"></span> Atelier textile · fabriqué à la demande</p>
+        <h1 class="fade-up">Ton idée.<br>Ton <span class="hl">style.</span></h1>
+        <p class="lead fade-up">T-shirts, sweats, tote bags, casquettes… Envoie ton logo ou raconte-nous simplement ce que tu imagines. Impression ou broderie, on fabrique à la demande et tu vois le rendu en direct.</p>
+        <div class="hero-cta fade-up">
+          <a class="btn" href="#studio" data-mode="logo"><span>J'ai un logo</span><i class="arrow">→</i></a>
+          <a class="btn btn-ghost" href="#studio" data-mode="idea"><span>J'ai juste une idée</span></a>
+        </div>
+        <ul class="hero-stats fade-up">
+          <li><b>24h</b><span>pour ton devis</span></li>
+          <li><b>4</b><span>techniques</span></li>
+          <li><b>8</b><span>coloris</span></li>
+          <li><b>1</b><span>pièce minimum</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-visual fade-up" id="heroVisual">
+        <div class="mat">
+          <span class="reg r1"></span><span class="reg r2"></span><span class="reg r3"></span><span class="reg r4"></span>
+          <span class="mat-label">PLANCHE N°01 — AVANT</span>
+          <div class="hero-shirt" id="heroShirt"></div>
+        </div>
+        <div class="tag t1">Rendu en direct</div>
+        <div class="tag t2">Brodé ou imprimé</div>
+        <div class="tag t3"><span class="dot" id="heroColorDot"></span><span id="heroColorName">Blanc</span></div>
+        <div class="stamp" aria-hidden="true"><span>dès</span><b>1</b><span>pièce</span></div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Logo d'entreprise</span><i>✺</i><span>Broderie</span><i>✺</i><span>EVJF / EVG</span><i>✺</i><span>Sérigraphie</span><i>✺</i><span>Club de sport</span><i>✺</i><span>Impression DTF</span><i>✺</i><span>Merch d'artiste</span><i>✺</i><span>Flocage</span><i>✺</i><span>Sweats &amp; hoodies</span><i>✺</i><span>Casquettes</span><i>✺</i><span>Tote bags</span><i>✺</i>
+        <span>Logo d'entreprise</span><i>✺</i><span>Broderie</span><i>✺</i><span>EVJF / EVG</span><i>✺</i><span>Sérigraphie</span><i>✺</i><span>Club de sport</span><i>✺</i><span>Impression DTF</span><i>✺</i><span>Merch d'artiste</span><i>✺</i><span>Flocage</span><i>✺</i><span>Sweats &amp; hoodies</span><i>✺</i><span>Casquettes</span><i>✺</i><span>Tote bags</span><i>✺</i>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <section id="process" class="section">
+      <p class="eyebrow reveal"><span class="sq"></span> Comment ça marche</p>
+      <h2 class="section-title reveal">Trois étapes, <span class="hl">zéro prise de tête.</span></h2>
+      <div class="steps">
+        <article class="step card reveal">
+          <span class="step-num">01</span>
+          <div class="step-icon"><svg viewBox="0 0 48 48"><path d="M8 14 18 8c2 4 10 4 12 0l10 6-4 8-4-2v20H16V20l-4 2z"/></svg></div>
+          <h3>Choisis ton article</h3>
+          <p>T-shirt, sweat, tote bag… et casquettes ou autres textiles sur demande. Puis la matière et la technique : impression, sérigraphie, broderie ou flocage.</p>
+        </article>
+        <article class="step card reveal">
+          <span class="step-num">02</span>
+          <div class="step-icon"><svg viewBox="0 0 48 48"><path d="M24 32V10m0 0-9 9m9-9 9 9M10 34v4h28v-4"/></svg></div>
+          <h3>Ajoute ton logo ou ton idée</h3>
+          <p>Glisse ton fichier et place-le où tu veux. Pas de logo ? Décris ton projet et ajoute des inspirations, on crée le visuel.</p>
+        </article>
+        <article class="step card reveal">
+          <span class="step-num">03</span>
+          <div class="step-icon"><svg viewBox="0 0 48 48"><path d="M6 14h24v18H6zM30 20h7l5 6v6H30M14 36a3 3 0 1 0 0 .1M34 36a3 3 0 1 0 0 .1"/></svg></div>
+          <h3>On fabrique &amp; on livre</h3>
+          <p>Tu reçois ta maquette et ton devis sous 24h. Tu valides, on fabrique, tu portes.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- TECHNIQUES -->
+    <section id="techniques" class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal"><span class="sq"></span> Techniques de marquage</p>
+          <h2 class="section-title reveal">Imprimé ou brodé, <span class="hl">à toi de voir.</span></h2>
+        </div>
+        <p class="muted reveal">Pas sûr ? Le studio te conseille automatiquement selon ton visuel et ta quantité.</p>
+      </div>
+      <div class="tech-grid" id="techShowcase"></div>
+    </section>
+
+    <!-- RÉALISATIONS (affiché seulement si des photos sont configurées) -->
+    <section id="realisations" class="section" hidden>
+      <p class="eyebrow reveal"><span class="sq"></span> Nos réalisations</p>
+      <h2 class="section-title reveal">Ils nous ont fait <span class="hl">confiance.</span></h2>
+      <div class="real-grid" id="realGrid"></div>
+    </section>
+
+    <!-- INSPIRATIONS -->
+    <section id="inspirations" class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal"><span class="sq"></span> Inspirations</p>
+          <h2 class="section-title reveal">Ce qu'on peut <span class="hl">faire ensemble.</span></h2>
+        </div>
+        <p class="muted reveal">Clique sur un modèle pour le charger dans le studio.</p>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- STUDIO -->
+    <section id="studio" class="section studio">
+      <p class="eyebrow reveal"><span class="sq"></span> Le studio</p>
+      <h2 class="section-title reveal">Compose ta pièce <span class="hl">en direct.</span></h2>
+
+      <div class="studio-grid">
+        <div class="stage card reveal" id="stage">
+          <div class="stage-top">
+            <div class="seg" id="sideSeg" role="tablist" aria-label="Face">
+              <button class="active" data-side="front" role="tab" aria-selected="true">Devant</button>
+              <button data-side="back" role="tab" aria-selected="false">Dos</button>
+              <span class="seg-ind"></span>
+            </div>
+            <button class="icon-btn" id="downloadMock" title="Télécharger la maquette">
+              <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></svg><span>Maquette</span>
+            </button>
+          </div>
+
+          <div class="stage-wrap">
+            <div class="stage-shirt" id="stageShirt"></div>
+            <div class="stage-empty" id="stageEmpty">
+              <b>Glisse ton logo ici</b>
+              <span>ou ajoute-le avec les outils du studio</span>
+            </div>
+            <div class="tech-badge" id="techBadge"></div>
+          </div>
+
+          <div class="stage-bottom">
+            <div class="swatches" id="swatches" role="radiogroup" aria-label="Couleur"></div>
+            <span class="color-name" id="colorName">Blanc</span>
+          </div>
+          <div class="stage-spec">
+            <span id="stageSpec">T-shirt classique · Coton peigné</span>
+            <span class="price-pill" id="stagePrice">—</span>
+          </div>
+          <p class="stage-hint">Glisse pour déplacer · poignées pour tourner et agrandir · molette pour zoomer</p>
+          <div class="drop-overlay" id="dropOverlay"><div><b>Lâche ton fichier</b><span>on le pose sur ton article</span></div></div>
+        </div>
+
+        <div class="panel card reveal">
+          <div class="tabs" id="modeTabs" role="tablist">
+            <button class="active" data-mode="product" role="tab"><i>1</i> Article</button>
+            <button data-mode="logo" role="tab"><i>2</i> Mon logo</button>
+            <button data-mode="idea" role="tab"><i>2</i> Mon idée</button>
+            <span class="tab-ind"></span>
+          </div>
+
+          <!-- Produit -->
+          <div class="pane active" data-pane="product">
+            <div class="field">
+              <label>Article</label>
+              <div class="opt-grid three" id="articleOpts"></div>
+            </div>
+            <div class="field" id="fitField">
+              <label>Coupe</label>
+              <div class="opt-grid fits" id="fitOpts"></div>
+            </div>
+            <div class="field">
+              <label>Matière</label>
+              <div class="opt-list" id="materialOpts"></div>
+            </div>
+            <div class="field">
+              <label>Technique de marquage</label>
+              <div class="opt-grid two" id="techOpts"></div>
+              <div class="advice" id="techAdvice"></div>
+            </div>
+            <div class="next-row">
+              <button class="btn btn-small" type="button" data-goto="logo"><span>J'ai un logo</span><i class="arrow">→</i></button>
+              <button class="btn btn-small btn-ghost" type="button" data-goto="idea"><span>J'ai une idée</span></button>
+            </div>
+          </div>
+
+          <!-- Mode logo -->
+          <div class="pane" data-pane="logo">
+            <div class="field emb-field" id="embField" hidden>
+              <label>Emplacement de la broderie</label>
+              <div class="emb-zones" id="embZones"></div>
+              <p class="emb-note">Choisis l'emplacement avant d'ajouter ton logo, ou clique dessus pour y déplacer l'élément sélectionné. Chaque emplacement brodé compte comme une face. Pas de broderie au dos.</p>
+            </div>
+            <label class="dropzone" id="dropzone">
+              <input type="file" id="fileInput" accept="image/*" multiple hidden>
+              <span class="dz-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 20h16"/></svg></span>
+              <b>Dépose ton logo</b>
+              <span>ou clique pour parcourir · PNG, JPG, SVG, WEBP</span>
+            </label>
+
+            <div class="field">
+              <label for="textInput">Ajouter un texte</label>
+              <div class="text-row">
+                <input id="textInput" placeholder="Un slogan, un prénom, une date…" maxlength="40" autocomplete="off">
+                <button class="btn btn-small" id="addText" type="button"><span>Ajouter</span></button>
+              </div>
+              <div class="text-opts">
+                <select id="fontSelect" aria-label="Police"></select>
+                <label class="color-pick" title="Couleur du texte"><input type="color" id="textColor" value="#111111"><span></span></label>
+              </div>
+            </div>
+
+            <div class="layer-tools" id="layerTools" hidden>
+              <div class="lt-head">
+                <b>Élément sélectionné <span class="dims" id="layerDims"></span></b>
+                <button class="icon-btn danger" id="deleteLayer" type="button">
+                  <svg viewBox="0 0 24 24"><path d="M5 7h14M10 7V4h4v3m-7 0 1 13h8l1-13"/></svg><span>Supprimer</span>
+                </button>
+              </div>
+              <label class="range"><span>Taille</span><input type="range" id="sizeRange" min="16" max="320"></label>
+              <label class="range"><span>Rotation</span><input type="range" id="rotRange" min="-180" max="180"></label>
+              <div class="chips">
+                <button class="chip" id="centerLayer" type="button">Centrer</button>
+                <button class="chip" id="removeBg" type="button">Retirer le fond blanc</button>
+                <button class="chip" id="dupLayer" type="button">Dupliquer</button>
+                <button class="chip" id="moveSide" type="button">Passer au dos</button>
+              </div>
+            </div>
+
+            <div class="layers" id="layersList"></div>
+          </div>
+
+          <!-- Mode idée -->
+          <div class="pane" data-pane="idea">
+            <div class="field">
+              <label for="ideaText">Raconte-nous ton idée</label>
+              <textarea id="ideaText" rows="5" placeholder="Ex : des t-shirts pour l'EVG de Thomas, style rétro années 80, un flamant rose devant et la date 14.06.2027 au dos…"></textarea>
+            </div>
+            <div class="field">
+              <label>Style recherché</label>
+              <div class="chips" id="styleChips"></div>
+            </div>
+            <div class="field">
+              <label>Emplacement</label>
+              <div class="chips" id="placeChips"></div>
+            </div>
+            <div class="field">
+              <label>Images d'inspiration</label>
+              <label class="dropzone small">
+                <input type="file" id="inspoInput" accept="image/*" multiple hidden>
+                <b>Ajouter des images</b>
+                <span>photos, croquis, captures d'écran…</span>
+              </label>
+              <div class="thumbs" id="inspoThumbs"></div>
+            </div>
+          </div>
+
+          <a class="btn btn-full panel-next" href="#order"><span>Continuer vers ma demande</span><i class="arrow">↓</i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMANDE -->
+    <section id="order" class="section">
+      <div class="order-grid">
+        <div class="order-intro">
+          <p class="eyebrow reveal"><span class="sq"></span> Dernière étape</p>
+          <h2 class="section-title reveal">On s'occupe <span class="hl">du reste.</span></h2>
+          <p class="lead reveal">Quelques infos et c'est parti : tu reçois ta maquette finale et ton devis sous 24h. Aucun paiement maintenant.</p>
+          <div class="mini-preview reveal" id="miniPreview">
+            <figure><img id="miniFront" alt="Aperçu devant"><figcaption>Devant</figcaption></figure>
+            <figure><img id="miniBack" alt="Aperçu dos"><figcaption>Dos</figcaption></figure>
+          </div>
+        </div>
+
+        <form class="card order-form reveal" id="orderForm" novalidate>
+          <div class="summary" id="orderSummary"></div>
+
+          <div class="field">
+            <label><span id="sizesLabel">Tailles &amp; quantités</span> <span class="pill" id="qtyTotal">0 pièce</span></label>
+            <div class="sizes" id="sizes"></div>
+          </div>
+
+          <div class="estimate" id="estimate">
+            <div class="est-row">
+              <div><span>Prix indicatif</span><b id="estUnit">—</b><small>/ pièce</small></div>
+              <div><span>Total estimé</span><b id="estTotal">—</b></div>
+            </div>
+            <p class="est-note" id="estNote"></p>
+            <div class="tiers" id="tiers"></div>
+          </div>
+
+          <div class="row2">
+            <div class="field"><label for="fName">Nom</label><input id="fName" autocomplete="name" required></div>
+            <div class="field"><label for="fEmail">Email</label><input id="fEmail" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="fPhone">Téléphone <small>(facultatif)</small></label><input id="fPhone" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="fDate">Pour quand ? <small>(facultatif)</small></label><input id="fDate" type="date"></div>
+          </div>
+          <div class="field"><label for="fNotes">Un dernier mot ? <small>(facultatif)</small></label><textarea id="fNotes" rows="3" placeholder="Budget, précisions, questions…"></textarea></div>
+          <label class="check"><input type="checkbox" id="fConsent"><span></span><div>J'accepte que mes informations et mes fichiers soient utilisés pour traiter ma demande (<a href="confidentialite.html" target="_blank">politique de confidentialité</a>).</div></label>
+          <p class="form-error" id="formError" role="alert"></p>
+          <button class="btn btn-full" type="submit" id="submitBtn"><span>Envoyer ma demande</span><i class="arrow">→</i></button>
+          <p class="fine">Demande gratuite et sans engagement · prix indicatifs TTC, confirmés dans ton devis.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section faq">
+      <p class="eyebrow reveal"><span class="sq"></span> Questions fréquentes</p>
+      <h2 class="section-title reveal">Tout ce que tu <span class="hl">te demandes.</span></h2>
+      <div class="faq-list">
+        <details class="reveal"><summary>Quelle technique choisir ?</summary><p><b>DTF</b> : toutes les couleurs, photos et dégradés, dès 1 pièce. <b>Sérigraphie</b> : couleurs éclatantes et très résistantes, la plus rentable à partir d'environ 20 pièces. <b>Broderie</b> : rendu premium et durable, idéal pour un logo jusqu'à 12 cm (cœur, centre poitrine, manche). Dans le studio, elle se fait sur le t-shirt Cotton Heritage ; pour broder un sweat, une casquette ou un autre article, précise-le dans ta demande. <b>Flocage</b> : parfait pour les noms, numéros et textes en 1 à 2 couleurs. Le studio te conseille automatiquement.</p></details>
+        <details class="reveal"><summary>Quelles matières proposez-vous ?</summary><p>Pour les t-shirts, le <b>coton peigné 180 g</b> est le classique doux et polyvalent. Le <b>coton bio</b> offre la même douceur avec une certification biologique. Le <b>coton épais 240 g</b> donne un tombé premium, parfait en oversize. Le <b>polyester technique</b> est idéal pour le sport, et le <b>tri-blend</b> donne un effet chiné vintage très doux. Les sweats existent en <b>molleton</b> classique, bio ou extra-épais, et les tote bags en coton naturel ou toile épaisse.</p></details>
+        <details class="reveal"><summary>Vous faites d'autres articles que ceux du studio ?</summary><p>Oui. Casquettes, polos, vestes, tabliers, textiles pro… on travaille selon ta demande. Décris ton projet dans « Mon idée » ou dans le champ « Un dernier mot » et on te fait un devis.</p></details>
+        <details class="reveal"><summary>Quels fichiers puis-je envoyer ?</summary><p>PNG (idéalement avec fond transparent), JPG, SVG ou WEBP. Ton logo est flou ou en basse résolution ? Pas de souci, on le redessine proprement avant la fabrication.</p></details>
+        <details class="reveal"><summary>Je n'ai pas de logo, c'est possible ?</summary><p>Bien sûr. Choisis « Mon idée » dans le studio, décris ce que tu veux et ajoute quelques images d'inspiration. On te propose une création.</p></details>
+        <details class="reveal"><summary>Les prix affichés sont-ils définitifs ?</summary><p>Ce sont des estimations indicatives TTC. Le prix définitif figure dans ton devis, envoyé sous 24h, selon la taille réelle du visuel et le nombre de couleurs.</p></details>
+        <details class="reveal"><summary>Combien de temps ça prend ?</summary><p>Tu reçois ta maquette et ton devis sous 24h. Après ta validation, compte en général 5 à 10 jours ouvrés selon la technique (la broderie et la sérigraphie demandent une préparation).</p></details>
+        <details class="reveal"><summary>Je dois payer maintenant ?</summary><p>Non. Ta demande est gratuite et sans engagement : tu ne paies qu'après avoir validé la maquette et le devis.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-big"><span class="logo"><i class="logo-script">Atelier</i><b class="logo-bold">CréerSon</b></span></div>
+      <div class="footer-cols">
+        <div><span class="f-title">Contact</span><div id="footerContact"></div></div>
+        <div><span class="f-title">Suis-nous</span><div id="footerSocial" class="socials"></div></div>
+        <div><span class="f-title">Infos</span><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a></div>
+      </div>
+      <div class="footer-row">
+        <span>© <span id="year"></span> Atelier CréerSon · Textile personnalisé, imprimé ou brodé</span>
+        <a href="#top">Retour en haut ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="Nous écrire sur WhatsApp" hidden>
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+  </a>
+
+  <!-- Succès -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-card card">
+      <img id="modalImg" alt="Ta maquette">
+      <h3 id="modalTitle">Demande envoyée !</h3>
+      <p id="modalText">On revient vers toi sous 24h avec ta maquette finale et ton devis.</p>
+      <div class="modal-actions">
+        <a class="btn btn-ghost" id="modalPay" href="#" target="_blank" rel="noopener" hidden><span>Régler un acompte</span></a>
+        <button class="btn" id="modalClose" type="button"><span>Super !</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+
+  <script src="js/config.js?v=3"></script>
+  <script src="js/app.js?v=3"></script>
+</body>
+</html>
