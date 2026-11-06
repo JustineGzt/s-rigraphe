@@ -8,6 +8,7 @@
   const CFG = Object.assign({
     brand: 'Atelier CréerSon', email: '', phone: '', whatsapp: '', instagram: '', tiktok: '', facebook: '',
     formEndpoint: '', paymentLink: '', realisations: [], articles: {}, techniques: {}, tiers: [],
+    creation: { offerteDes: 0, offres: [] },
   }, window.SITE_CONFIG || {});
 
   const COLORS = [
@@ -44,7 +45,6 @@
      ------------------------------------------------------------------------ */
   const NECKS = {
     round: { front: 'C168,72 232,72 250,30', back: 'C170,46 230,46 250,30', inner: 'M150,30 C170,42 230,42 250,30 C232,72 168,72 150,30 Z' },
-    v: { front: 'L200,104 L250,30', back: 'C170,46 230,46 250,30', inner: 'M150,30 Q200,46 250,30 L200,104 Z' },
     hood: { front: 'C176,96 224,96 250,30', back: 'C170,46 230,46 250,30', inner: 'M150,30 C170,42 230,42 250,30 C224,96 176,96 150,30 Z' },
   };
   const seam = (...ds) => ds.map((d) => `<path d="${d}"/>`).join('');
@@ -53,7 +53,7 @@
 
   const SHAPES = {
     classique: {
-      neck: 'round', print: T_PRINT,
+      neck: 'round', print: T_PRINT, sleeve: { x: 338, y: 96, w: 30, h: 38 },
       rest: 'L330,52 Q350,60 362,80 L398,142 L346,176 L322,148 L324,438 Q200,452 76,438 L78,148 L54,176 L2,142 L38,80 Q50,60 70,52 Z',
       seams: seam('M78,148 Q66,100 70,52', 'M322,148 Q334,100 330,52', 'M10,131 L62,165', 'M390,131 L338,165') + hem('M78,426 Q200,440 322,426'),
     },
@@ -63,7 +63,7 @@
       seams: seam('M70,160 Q58,110 64,50', 'M330,160 Q342,110 336,50', 'M8,152 L60,180', 'M392,152 L340,180') + hem('M70,428 Q200,442 330,428'),
     },
     heritage: {
-      neck: 'round', print: { x: 118, y: 96, w: 164, h: 225 },
+      neck: 'round', print: { x: 118, y: 96, w: 164, h: 225 }, sleeve: { x: 346, y: 120, w: 34, h: 48 },
       rest: 'L340,46 Q362,54 372,74 L400,190 L346,204 L334,176 L336,440 Q200,450 64,440 L66,176 L54,204 L0,190 L28,74 Q38,54 60,46 Z',
       seams: seam('M66,176 Q60,110 58,48', 'M334,176 Q340,110 342,48', 'M3,178 L57,192', 'M397,178 L343,192') + hem('M66,428 Q200,440 334,428'),
     },
@@ -72,18 +72,17 @@
       rest: 'L326,52 Q346,60 358,80 L392,140 L342,172 L318,148 Q300,290 314,438 Q200,450 86,438 Q100,290 82,148 L58,172 L8,140 L42,80 Q54,60 74,52 Z',
       seams: seam('M82,148 Q70,100 74,52', 'M318,148 Q330,100 326,52', 'M15,128 L64,162', 'M385,128 L336,162') + hem('M88,426 Q200,438 312,426'),
     },
-    colv: {
-      neck: 'v', print: { x: 120, y: 118, w: 160, h: 200 },
-      rest: 'L330,52 Q350,60 362,80 L398,142 L346,176 L322,148 L324,438 Q200,452 76,438 L78,148 L54,176 L2,142 L38,80 Q50,60 70,52 Z',
-      seams: seam('M78,148 Q66,100 70,52', 'M322,148 Q334,100 330,52', 'M10,131 L62,165', 'M390,131 L338,165') + hem('M78,426 Q200,440 322,426'),
-    },
     longues: {
-      neck: 'round', print: T_PRINT,
+      neck: 'round', print: T_PRINT, sleeve: { x: 336, y: 96, w: 26, h: 40 }, cuff: { x: 350, y: 348, w: 34, h: 32 },
+      longSleeve: { x: 346, y: 180, w: 22, h: 160 },
       rest: 'L330,52 Q350,60 362,80 L392,404 L352,410 L324,176 L324,438 Q200,452 76,438 L76,176 L48,410 L8,404 L38,80 Q50,60 70,52 Z',
       seams: seam('M76,176 Q66,110 70,52', 'M324,176 Q334,110 330,52', 'M11,384 L50,390', 'M389,384 L350,390') + hem('M78,426 Q200,440 322,426'),
     },
     hoodie: {
       neck: 'hood', print: { x: 125, y: 132, w: 150, h: 175 },
+      // la capuche couvre le haut du dos et l'encolure : zones décalées
+      backPrint: { x: 120, y: 140, w: 160, h: 220 }, label: { side: 'front', x: 184, y: 44, w: 32, h: 22 },
+      chestY: 132, cuff: { x: 350, y: 340, w: 34, h: 32 }, longSleeve: { x: 350, y: 180, w: 24, h: 180 },
       rest: 'L334,52 Q354,60 366,82 L394,400 L350,408 L328,178 L330,438 Q200,452 70,438 L72,178 L50,408 L6,400 L34,82 Q46,60 66,52 Z',
       seams: seam('M72,178 Q62,112 66,52', 'M328,178 Q338,112 334,52', 'M9,380 L52,388', 'M391,380 L348,388') + hem('M70,414 Q200,428 330,414'),
       frontSeams: seam('M130,320 L270,320 L294,404 Q200,414 106,404 Z'),
@@ -105,12 +104,28 @@
       under: '<path class="js-stroke" d="M120,122 C120,16 280,16 280,122" fill="none" stroke-width="16" stroke-linecap="round"/>'
         + '<path d="M120,122 C120,16 280,16 280,122" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="16" stroke-linecap="round"/>',
     },
+    // tote rectangulaire à longues anses (Westford Mill W101)
+    toteLong: {
+      tote: true, print: { x: 110, y: 214, w: 180, h: 200 },
+      body: 'M74,184 L326,184 L328,448 L72,448 Z',
+      seams: seam('M74,198 L326,198') + hem('M73,436 L327,436'),
+      under: '<path class="js-stroke" d="M130,188 L130,26 L270,26 L270,188" fill="none" stroke-width="18" stroke-linejoin="round"/>'
+        + '<path d="M130,188 L130,26 L270,26 L270,188" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="18" stroke-linejoin="round"/>',
+    },
+    // tote à soufflet, coins du bas coupés (Econscious EC8000)
+    toteEco: {
+      tote: true, print: { x: 112, y: 200, w: 176, h: 170 },
+      body: 'M60,172 L340,172 L342,384 L296,440 L104,440 L58,384 Z',
+      seams: seam('M60,186 L340,186', 'M126,172 L126,186', 'M274,172 L274,186') + hem('M66,380 L334,380'),
+      under: '<path class="js-stroke" d="M136,176 L136,48 Q136,34 150,34 L250,34 Q264,34 264,48 L264,176" fill="none" stroke-width="20" stroke-linejoin="round"/>'
+        + '<path d="M136,176 L136,48 Q136,34 150,34 L250,34 Q264,34 264,48 L264,176" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="20" stroke-linejoin="round"/>',
+    },
   };
 
   function getShape(article, fit, side) {
     const key = article === 'tote' ? 'tote' : article === 'hoodie' ? 'hoodie' : (SHAPES[fit] ? fit : 'classique');
     const s = SHAPES[key];
-    if (s.tote) return { body: s.body, neck: '', inner: '', under: s.under, over: '', seams: s.seams, print: s.print };
+    if (s.tote) return { tote: true, body: s.body, neck: '', inner: '', under: s.under, over: '', seams: s.seams, print: s.print, backPrint: s.print };
     const n = NECKS[s.neck];
     return {
       body: `M150,30 ${n[side]} ${s.rest}`,
@@ -120,17 +135,55 @@
       over: s.over ? s.over[side] : '',
       seams: s.seams + (side === 'front' && s.frontSeams ? s.frontSeams : ''),
       print: s.print,
+      sleeve: s.sleeve,
+      cuff: s.cuff,
+      longSleeve: s.longSleeve,
+      backPrint: s.backPrint,
+      label: s.label,
+      chestY: s.chestY,
     };
   }
 
-  /* Broderie : seulement 4 emplacements possibles (devant + manches), sur le t-shirt Cotton Heritage */
+  /* Emplacements : la broderie (devant + manches, sur les modèles prévus) et l'impression des articles
+     qui listent leurs `emplacements`. Manche gauche = gauche de la personne qui le porte. */
   const EMB = CFG.techniques.broderie;
   const EZ = (EMB?.maxCm || 12) / CM_PER_UNIT; // côté max d'une broderie poitrine, en unités SVG
-  const EMB_ZONES = {
-    poitrine: { id: 'poitrine', label: 'Centre poitrine', x: 200 - EZ / 2, y: 88, w: EZ, h: EZ },
-    coeur: { id: 'coeur', label: 'Cœur', x: 238, y: 100, w: EZ * 0.75, h: EZ * 0.75 },
-    'manche-g': { id: 'manche-g', label: 'Manche gauche', x: 346, y: 120, w: 34, h: 48 },
-    'manche-d': { id: 'manche-d', label: 'Manche droite', x: 20, y: 120, w: 34, h: 48 },
+  const DEFAULT_SLEEVE = { x: 346, y: 120, w: 34, h: 48 };
+  const mirror = (z) => ({ ...z, x: 400 - z.x - z.w });
+
+  const DEFAULT_EMB = ['poitrine', 'coeur', 'manche-g', 'manche-d'];
+  const embZonesFor = (shape) => {
+    const sl = shape.sleeve || DEFAULT_SLEEVE, cuff = shape.cuff, y = shape.chestY || 88;
+    const p = shape.print, bag = { x: p.x + p.w / 2 - EZ / 2, y: p.y + 30, w: EZ, h: EZ };
+    return {
+      'sac-avant': { side: 'front', label: 'Avant', ...bag },
+      'sac-arriere': { side: 'back', label: 'Arrière', ...bag },
+      poitrine: { side: 'front', label: 'Centre poitrine', x: 200 - EZ / 2, y, w: EZ, h: EZ },
+      coeur: { side: 'front', label: 'Poitrine gauche', x: 238, y: y + 12, w: EZ * 0.75, h: EZ * 0.75 },
+      'manche-g': { side: 'front', label: 'Manche gauche', ...sl },
+      'manche-d': { side: 'front', label: 'Manche droite', ...mirror(sl) },
+      ...(cuff && {
+        'poignet-g': { side: 'front', label: 'Poignet gauche', ...cuff },
+        'poignet-d': { side: 'front', label: 'Poignet droit', ...mirror(cuff) },
+      }),
+    };
+  };
+
+  const printZonesFor = (shape) => {
+    const sl = shape.sleeve || DEFAULT_SLEEVE, ls = shape.longSleeve;
+    return {
+      avant: { side: 'front', label: 'Imprimé avant', ...shape.print },
+      'grand-avant': { side: 'front', label: 'Grande impression avant', x: 104, y: 92, w: 192, h: 270 },
+      arriere: { side: 'back', label: 'Imprimé arrière', ...(shape.backPrint || { x: 120, y: 70, w: 160, h: 220 }) },
+      'grand-arriere': { side: 'back', label: 'Grand format au dos', x: 104, y: 64, w: 192, h: 300 },
+      etiquette: { side: 'back', label: 'Étiquette intérieure', x: 176, y: 48, w: 48, h: 30, ...shape.label },
+      'manche-g': { side: 'front', label: 'Manche courte gauche', ...sl },
+      'manche-d': { side: 'front', label: 'Manche courte droite', ...mirror(sl) },
+      ...(ls && {
+        'manche-longue-d': { side: 'front', label: 'Manche longue droite', ...mirror(ls) },
+        'manche-longue-g': { side: 'front', label: 'Manche longue gauche', ...ls },
+      }),
+    };
   };
 
   const $ = (s, r = document) => r.querySelector(s);
@@ -159,35 +212,74 @@
     styles: new Set(),
     places: new Set(),
     inspo: [],
+    creation: (CFG.creation.offres.find((o) => o.defaut) || CFG.creation.offres[0])?.id,
     article: firstKey(CFG.articles),
     fit: null,
     material: null,
     tech: firstKey(CFG.techniques),
     sizes: {},
     textColorTouched: false,
-    embZone: 'poitrine',
+    zone: 'poitrine',
   };
   const art = () => CFG.articles[state.article];
   state.fit = firstKey(art().fits);
   state.material = art().materials[0].id;
-  let PRINT = getShape(state.article, state.fit, 'front').print;
 
   const isEmb = () => state.tech === 'broderie' && !!EMB;
-  const palette = () => (isEmb() && EMB.colors?.length ? EMB.colors : COLORS);
-  const currentZones = () => (isEmb() ? Object.values(EMB_ZONES) : [PRINT]);
-  const zoneFor = (l) => (isEmb() ? EMB_ZONES[l.zone] || EMB_ZONES.poitrine : PRINT);
+  const palette = () => (art().colors?.length ? art().colors : isEmb() && EMB.colors?.length ? EMB.colors : COLORS);
+
+  // emplacements du mode en cours, ou null quand chaque face a une seule zone libre
+  function zonesNow() {
+    const shape = getShape(state.article, state.fit, 'front');
+    const ids = isEmb() ? art().emplacementsBroderie || DEFAULT_EMB : art().emplacements;
+    if (!ids?.length) return null;
+    const all = isEmb() ? embZonesFor(shape) : printZonesFor(shape);
+    const zones = Object.fromEntries(ids.filter((id) => all[id]).map((id) => [id, all[id]]));
+    Object.entries(zones).forEach(([id, z]) => (z.id = id));
+    return zones;
+  }
+
+  let PRINT = getShape(state.article, state.fit, 'front').print;
+  let ZONES = zonesNow();
+  const zoneList = () => Object.values(ZONES || {});
+  const firstZoneOn = (side) => zoneList().find((z) => z.side === side);
+  const activeZone = () => {
+    if (!ZONES) return '';
+    const l = current();
+    return l && l.side === state.side ? l.zone : state.zone;
+  };
+  const currentZones = (side = state.side) => (ZONES ? zoneList().filter((z) => z.side === side) : [PRINT]);
+  const zoneFor = (l) => (ZONES ? ZONES[l.zone] || zoneList()[0] : PRINT);
   const maxWidth = (l) => {
-    if (!isEmb()) return 320;
+    if (!ZONES) return 320;
     const z = zoneFor(l);
     return Math.min(z.w, z.h / l.aspect);
   };
 
-  // garde l'élément dans sa zone (en broderie : entièrement dedans, taille comprise)
+  // chaque élément (et l'emplacement choisi) reste sur un emplacement valable pour le mode en cours
+  function normalizeZones() {
+    if (!ZONES) return;
+    // un élément sans emplacement valable va sur un emplacement libre (même face d'abord) plutôt que de s'empiler
+    const taken = new Set(state.layers.filter((l) => ZONES[l.zone]).map((l) => l.zone));
+    state.layers.forEach((l) => {
+      if (!ZONES[l.zone]) {
+        const free = zoneList().filter((z) => !taken.has(z.id));
+        const z = free.find((x) => x.side === l.side) || free[0] || firstZoneOn(l.side) || zoneList()[0];
+        l.zone = z.id;
+        l.x = z.x + z.w / 2; l.y = z.y + z.h / 2;
+        taken.add(z.id);
+      }
+      l.side = ZONES[l.zone].side;
+    });
+    if (ZONES[state.zone]?.side !== state.side) state.zone = (firstZoneOn(state.side) || zoneList()[0]).id;
+  }
+
+  // garde l'élément dans sa zone (avec emplacements : entièrement dedans, taille comprise)
   function clampLayer(l) {
     const z = zoneFor(l);
     l.w = clamp(l.w, 8, maxWidth(l));
     l.h = l.w * l.aspect;
-    if (isEmb()) {
+    if (ZONES) {
       l.x = clamp(l.x, z.x + l.w / 2, z.x + z.w - l.w / 2);
       l.y = clamp(l.y, z.y + l.h / 2, z.y + z.h - l.h / 2);
     } else {
@@ -278,7 +370,7 @@
   }
 
   // forme + zones du studio pour une face donnée
-  const applyStage = (target, side) => setShape(target, getShape(state.article, state.fit, side), state.color.hex, currentZones());
+  const applyStage = (target, side) => setShape(target, getShape(state.article, state.fit, side), state.color.hex, currentZones(side));
 
   /* ------------------------------------------------------------------------
      Hero : t-shirt qui change de couleur
@@ -392,7 +484,7 @@
       </button>`).join('');
     $$('.js-zone', g).forEach((z) => z.remove());
     $$('.look', g).forEach((b) => b.addEventListener('click', () => {
-      if (!palette().includes(COLORS[+b.dataset.color])) { toast('Cette couleur n\'existe pas en broderie (Cotton Heritage)'); return; }
+      if (!palette().includes(COLORS[+b.dataset.color])) { toast(`Cette couleur n'existe pas sur le modèle ${articleName()}${isEmb() ? ' brodé' : ''}`); return; }
       setColor(COLORS[+b.dataset.color]);
       $('#studio').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
       toast(`Couleur « ${COLORS[+b.dataset.color].name} » sélectionnée`);
@@ -408,6 +500,7 @@
 
   const ICONS = {
     tshirt: '<svg viewBox="0 0 48 48"><path d="M8 14 18 8c2 4 10 4 12 0l10 6-4 8-4-2v20H16V20l-4 2z"/></svg>',
+    longsleeve: '<svg viewBox="0 0 48 48"><path d="M8 14 18 8c2 4 10 4 12 0l10 6 3 26h-5l-2-18v20H16V22l-2 18H9z"/></svg>',
     hoodie: '<svg viewBox="0 0 48 48"><path d="M17 9c1-5 13-5 14 0l9 5 2 24h-5l-2-16v20H13V22l-2 16H6l2-24z"/><path d="M19 10c1 6 9 6 10 0M19 34h10"/></svg>',
     tote: '<svg viewBox="0 0 48 48"><path d="M9 18h30l-2 24H11z"/><path d="M17 18c0-11 14-11 14 0"/></svg>',
   };
@@ -437,7 +530,8 @@
     });
     $$('a[data-mode]').forEach((a) => a.addEventListener('click', () => setMode(a.dataset.mode)));
     $$('[data-goto]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.goto)));
-    window.addEventListener('resize', () => { moveIndicator($('#sideSeg')); moveIndicator($('#modeTabs')); });
+    $('#zoneTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-z]'); if (b) setZone(b.dataset.z); });
+    window.addEventListener('resize', () => { moveIndicator($('#sideSeg')); moveIndicator($('#modeTabs')); placeEmpty(); });
 
     // article, coupe, matière, technique
     initProduct();
@@ -467,7 +561,7 @@
       const l = current(); if (!l) return;
       const z = zoneFor(l);
       l.x = z.x + z.w / 2;
-      if (isEmb()) l.y = z.y + z.h / 2;
+      if (ZONES) l.y = z.y + z.h / 2;
       clampLayer(l); updateLayerDom(l); changed();
     });
     $('#dupLayer').addEventListener('click', () => {
@@ -477,7 +571,7 @@
       addLayer(copy);
     });
     $('#moveSide').addEventListener('click', () => {
-      const l = current(); if (!l || isEmb()) return;
+      const l = current(); if (!l || ZONES) return;
       l.side = l.side === 'front' ? 'back' : 'front';
       switchSide(l.side);
       changed();
@@ -496,6 +590,7 @@
     chipGroup($('#placeChips'), PLACES, state.places, refresh);
     $('#inspoInput').addEventListener('change', (e) => { addInspo(e.target.files); e.target.value = ''; });
     $('#ideaText').addEventListener('input', () => { clearTimeout(ideaTimer); ideaTimer = setTimeout(refresh, 300); });
+    initCreation();
 
     // clavier
     document.addEventListener('keydown', (e) => {
@@ -514,7 +609,7 @@
     });
 
     renderDesign();
-    renderEmbZones();
+    renderZones();
     updateEmpty();
     setMode(state.mode);
     moveIndicator($('#sideSeg'));
@@ -527,6 +622,30 @@
     if (!active || !ind) return;
     ind.style.width = `${active.offsetWidth}px`;
     ind.style.transform = `translateX(${active.offsetLeft - 3}px)`;
+  }
+
+  // offres de création du design (mode idée)
+  function initCreation() {
+    const box = $('#creationOpts');
+    const { offres, offerteDes } = CFG.creation;
+    const paint = () => {
+      box.innerHTML = offres.map((o) => `
+        <button type="button" class="mat-opt${o.id === state.creation ? ' active' : ''}" data-v="${o.id}" aria-pressed="${o.id === state.creation}">
+          <span class="radio"></span>
+          <span><b>${esc(o.name)}</b><small>${esc(o.desc)}</small></span>
+          <span class="price">${creationPrice(o)}</span>
+        </button>`).join('');
+    };
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-v]');
+      if (!b) return;
+      state.creation = b.dataset.v;
+      paint();
+      refresh();
+    });
+    const head = offerteDes ? `Offerte dès ${offerteDes} pièces. Sinon, réglée` : 'Réglée';
+    $('#creationNote').textContent = `${head} après le devis, avant de commencer. 2 séries de retouches incluses.`;
+    paint();
   }
 
   function setMode(mode) {
@@ -554,7 +673,7 @@
 
   let flipping = false;
   async function switchSide(side) {
-    if (side === state.side || flipping || (side === 'back' && isEmb())) return;
+    if (side === state.side || flipping || (ZONES && !firstZoneOn(side))) return;
     $$('#sideSeg button').forEach((b) => {
       b.classList.toggle('active', b.dataset.side === side);
       b.setAttribute('aria-selected', b.dataset.side === side);
@@ -566,8 +685,9 @@
       await stageShirt.animate([{ transform: 'rotateY(0deg)' }, { transform: `rotateY(${90 * dir}deg)` }], { duration: 220, easing: 'cubic-bezier(.5,0,.75,0)' }).finished;
     }
     state.side = side;
+    if (ZONES && ZONES[state.zone]?.side !== side) state.zone = firstZoneOn(side).id;
     applyStage(svg, side);
-    highlightZone();
+    renderZones();
     renderDesign();
     if (!reduced && stageShirt.animate) {
       await stageShirt.animate([{ transform: `rotateY(${-90 * dir}deg)` }, { transform: 'rotateY(0deg)' }], { duration: 380, easing: 'cubic-bezier(.22,1,.36,1)' }).finished;
@@ -580,7 +700,7 @@
   function initProduct() {
     $('#articleOpts').addEventListener('click', (e) => { const b = e.target.closest('.opt'); if (b) setArticle(b.dataset.v); });
     $('#fitOpts').addEventListener('click', (e) => { const b = e.target.closest('.opt'); if (b && !embLocked('fit', b.dataset.v)) { state.fit = b.dataset.v; applyShape(); } });
-    $('#embZones').addEventListener('click', (e) => { const b = e.target.closest('.emb-zone'); if (b) setEmbZone(b.dataset.z); });
+    $('#embZones').addEventListener('click', (e) => { const b = e.target.closest('.emb-zone'); if (b) setZone(b.dataset.z); });
     $('#materialOpts').addEventListener('click', (e) => { const b = e.target.closest('.mat-opt'); if (b) { state.material = b.dataset.v; renderProduct(); refresh(); } });
     $('#techOpts').addEventListener('click', (e) => { const b = e.target.closest('.opt'); if (b) setTech(b.dataset.v); });
     $('#techAdvice').addEventListener('click', (e) => { const b = e.target.closest('[data-tech]'); if (b) setTech(b.dataset.tech); });
@@ -594,7 +714,7 @@
     const a = art();
     $('#articleOpts').innerHTML = Object.entries(CFG.articles).map(([id, x]) => `
       <button type="button" class="opt${id === state.article ? ' active' : ''}" data-v="${id}" aria-pressed="${id === state.article}"${embLocked('article', id) ? ' disabled' : ''}>
-        ${ICONS[id] || ICONS.tshirt}<b>${esc(x.label)}</b><small>${embLocked('article', id) ? 'pas en broderie' : `dès ${fmt(x.base + minPerFace())}`}</small>
+        ${ICONS[id] || ICONS[firstKey(x.fits)] || (firstKey(x.fits).startsWith('tote') ? ICONS.tote : ICONS.tshirt)}<b>${esc(x.label)}</b><small>${embLocked('article', id) ? 'pas en broderie' : `${x.model ? `${esc(x.model)} · ` : ''}dès ${fmt(Math.min(...Object.keys(CFG.techniques).filter((t) => !x.techniques || x.techniques.includes(t)).map((t) => fromPrice(x, t))))}`}</small>
       </button>`).join('');
     const fits = Object.entries(a.fits);
     $('#fitField').hidden = fits.length < 2;
@@ -609,13 +729,25 @@
         <span class="price">${priceTag(m.price)}</span>
       </button>`).join('');
     $('#techOpts').innerHTML = Object.entries(CFG.techniques).map(([id, t]) => `
-      <button type="button" class="opt tech-opt${id === state.tech ? ' active' : ''}" data-v="${id}" aria-pressed="${id === state.tech}">
-        <span class="tsw sw-${id}"></span><b>${esc(t.name)}</b><small>+${fmt(t.perFace)} / face${t.setup ? ` · ${fmt(t.setup)} mise en route` : ''}</small>
+      <button type="button" class="opt tech-opt${id === state.tech ? ' active' : ''}" data-v="${id}" aria-pressed="${id === state.tech}"${techLocked(id) ? ' disabled' : ''}>
+        <span class="tsw sw-${id}"></span><b>${esc(t.name)}</b><small>${techLocked(id) ? 'pas sur cet article' : a.cost ? `dès ${fmt(fromPrice(a, id))}` : `+${fmt(t.perFace)} / face${t.setup ? ` · ${fmt(t.setup)} mise en route` : ''}`}</small>
       </button>`).join('');
   }
 
-  // en broderie, seuls le modèle et la coupe prévus sont possibles
-  const embLocked = (kind, id) => isEmb() && EMB.only?.[kind] && EMB.only[kind] !== id;
+  // en broderie, seuls les modèles (article + coupe éventuelle) prévus sont possibles
+  const embAllowed = () => [].concat(EMB?.only || []);
+  const embFits = (o, article) => !o.article || o.article === article;
+  function embLocked(kind, id) {
+    const ok = embAllowed();
+    if (!isEmb() || !ok.length) return false;
+    if (kind === 'article') return !ok.some((o) => embFits(o, id));
+    return !ok.some((o) => embFits(o, state.article) && (!o.fit || o.fit === id));
+  }
+
+  const articleName = () => {
+    const a = art();
+    return Object.keys(a.fits).length > 1 ? `${a.label} ${a.fits[state.fit].label}` : a.label;
+  };
 
   function setArticle(id) {
     if (!CFG.articles[id] || embLocked('article', id)) return;
@@ -623,63 +755,79 @@
     const a = art();
     if (!a.fits[state.fit]) state.fit = firstKey(a.fits);
     if (!a.materials.some((m) => m.id === state.material)) state.material = a.materials[0].id;
+    // technique non proposée sur cet article : on passe à la première possible
+    if (techLocked(state.tech)) {
+      state.tech = a.techniques.find((t) => CFG.techniques[t]);
+      toast(`${a.label} : ${CFG.techniques[state.tech].name} sélectionnée`);
+    }
     renderSizes();
     applyShape();
   }
 
+  // un article peut limiter ses techniques (`techniques: [...]` dans la config)
+  const techLocked = (id) => !!art().techniques && !art().techniques.includes(id);
+
   function setTech(id) {
-    if (!CFG.techniques[id] || id === state.tech) return;
-    const wasEmb = isEmb();
+    if (!CFG.techniques[id] || id === state.tech || techLocked(id)) return;
     state.tech = id;
     if (isEmb()) enterEmbroidery();
-    else if (wasEmb) leaveEmbroidery();
     applyShape();
   }
 
   function applyShape() {
     PRINT = getShape(state.article, state.fit, state.side).print;
+    ZONES = zonesNow();
+    normalizeZones();
+    // couleur indisponible sur ce modèle : on prend la teinte la plus proche
+    if (!palette().some((c) => c.hex === state.color.hex)) {
+      const rgb = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+      const [r, g, b] = rgb(state.color.hex);
+      const dist = (c) => { const [r2, g2, b2] = rgb(c.hex); return (r - r2) ** 2 + (g - g2) ** 2 + (b - b2) ** 2; };
+      state.color = palette().reduce((best, c) => (dist(c) < dist(best) ? c : best));
+    }
     applyStage(svg, state.side);
     state.layers.forEach(clampLayer);
     renderProduct();
     renderSwatches();
-    renderEmbZones();
+    renderZones();
     renderDesign();
     changed();
   }
 
   /* ----- broderie : modèle, coloris et emplacements imposés ----- */
   function enterEmbroidery() {
-    const only = EMB.only || {};
-    const articleChanged = only.article && state.article !== only.article;
-    if (articleChanged) state.article = only.article;
-    if (only.fit && art().fits[only.fit]) state.fit = only.fit;
-    else if (!art().fits[state.fit]) state.fit = firstKey(art().fits);
-    if (!art().materials.some((m) => m.id === state.material)) state.material = art().materials[0].id;
-    if (articleChanged) renderSizes();
-    if (!palette().some((c) => c.hex === state.color.hex)) state.color = palette()[0];
-    // pas de broderie au dos : on ramène tout devant, sur un emplacement autorisé
-    const moved = state.layers.filter((l) => l.side === 'back').length;
-    state.layers.forEach((l) => {
-      l.side = 'front';
-      if (!EMB_ZONES[l.zone]) l.zone = state.embZone;
-    });
-    if (state.side === 'back') {
+    const ok = embAllowed();
+    const match = ok.find((o) => embFits(o, state.article) && (!o.fit || o.fit === state.fit))
+      || ok.find((o) => embFits(o, state.article)) || ok[0];
+    const before = articleName();
+    if (match) {
+      const articleChanged = match.article && state.article !== match.article;
+      if (articleChanged) state.article = match.article;
+      if (match.fit && art().fits[match.fit]) state.fit = match.fit;
+      else if (!art().fits[state.fit]) state.fit = firstKey(art().fits);
+      if (!art().materials.some((m) => m.id === state.material)) state.material = art().materials[0].id;
+      if (articleChanged) renderSizes();
+    }
+    // pas de broderie au dos : applyShape ramène tout devant, sur un emplacement autorisé
+    const embAll = embZonesFor(getShape(state.article, state.fit, 'front'));
+    const backOk = (art().emplacementsBroderie || DEFAULT_EMB).some((z) => embAll[z]?.side === 'back');
+    const moved = backOk ? 0 : state.layers.filter((l) => l.side === 'back').length;
+    if (state.side === 'back' && !backOk) {
       state.side = 'front';
       $$('#sideSeg button').forEach((b) => { b.classList.toggle('active', b.dataset.side === 'front'); b.setAttribute('aria-selected', b.dataset.side === 'front'); });
       moveIndicator($('#sideSeg'));
     }
-    toast(moved ? 'Broderie : t-shirt Cotton Heritage · les éléments du dos sont passés devant' : 'Broderie : t-shirt Cotton Heritage sélectionné');
-  }
-
-  function leaveEmbroidery() {
-    if (!COLORS.some((c) => c.hex === state.color.hex)) state.color = isDark(state.color.hex) ? COLORS[1] : COLORS[0];
+    const msgs = [];
+    if (articleName() !== before) msgs.push(`${articleName()} sélectionné`);
+    if (moved) msgs.push('les éléments du dos sont passés devant');
+    if (msgs.length) toast(`Broderie : ${msgs.join(' · ')}`);
   }
 
   function renderSwatches() {
     const list = palette();
     $('#swatches').innerHTML = list.map((c, i) => {
       const on = c.hex === state.color.hex;
-      return `<button class="swatch${on ? ' active' : ''}" style="--c:${c.hex}" role="radio" aria-checked="${on}" aria-label="${esc(c.name)}" title="${esc(c.name)}" data-i="${i}"></button>`;
+      return `<button class="swatch${on ? ' active' : ''}${c.hex2 ? ' duo' : ''}" style="--c:${c.hex}${c.hex2 ? `;--c2:${c.hex2}` : ''}" role="radio" aria-checked="${on}" aria-label="${esc(c.name)}" title="${esc(c.name)}" data-i="${i}"></button>`;
     }).join('');
     setShirtColor(svg, state.color.hex);
     $('#colorName').textContent = state.color.name;
@@ -695,52 +843,92 @@
     paintTextColor(tc);
   }
 
-  const ZONE_ICON = (z) => `<svg viewBox="0 0 400 300" aria-hidden="true">
-    <path d="M150,30 C168,72 232,72 250,30 L340,46 Q362,54 372,74 L400,190 L346,204 L334,176 L336,300 L64,300 L66,176 L54,204 L0,190 L28,74 Q38,54 60,46 Z"/>
+  const ZONE_ICON = (z, vh) => `<svg viewBox="0 0 400 ${vh}" aria-hidden="true">
+    <path d="${getShape(state.article, state.fit, z.side).body}"/>
     <rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" rx="4"/></svg>`;
 
-  function renderEmbZones() {
-    const on = isEmb();
-    $('#embField').hidden = !on;
+  const cmSize = (z) => `${Math.round(z.w * CM_PER_UNIT)} × ${Math.round(z.h * CM_PER_UNIT)} cm`;
+
+  function renderZones() {
+    const zones = zoneList();
+    const noBack = !!ZONES && !firstZoneOn('back');
     const back = $('#sideSeg button[data-side="back"]');
-    back.disabled = on;
-    back.title = on ? 'Pas de broderie au dos' : '';
-    $('#moveSide').hidden = on;
-    if (!on) return;
-    const active = current()?.zone || state.embZone;
-    $('#embZones').innerHTML = Object.values(EMB_ZONES).map((z) => `
+    back.disabled = noBack;
+    back.title = noBack ? 'Pas de broderie au dos' : '';
+    $('#embField').hidden = !ZONES;
+    $('#zoneTabs').hidden = !ZONES;
+    $('#moveSide').hidden = !!ZONES;
+    stage.classList.toggle('zoned', !!ZONES);
+    if (!ZONES) { highlightZone(); return; }
+    const active = activeZone();
+    const used = new Set(state.layers.map((l) => l.zone));
+    const vh = Math.max(300, ...zones.map((z) => z.y + z.h + 24));
+    $('#embLabel').textContent = isEmb() ? 'Emplacement de la broderie' : "Emplacement de l'impression";
+    $('#embNote').textContent = isEmb()
+      ? `Choisis l'emplacement avant d'ajouter ton logo, ou clique dessus pour y déplacer l'élément sélectionné. Chaque emplacement brodé compte comme une face.${noBack ? ' Pas de broderie au dos.' : ''}`
+      : "Choisis l'emplacement avant d'ajouter ton visuel. Chaque emplacement imprimé compte comme une face.";
+    $('#embZones').innerHTML = zones.map((z) => `
       <button type="button" class="emb-zone${z.id === active ? ' active' : ''}" data-z="${z.id}" aria-pressed="${z.id === active}">
-        ${ZONE_ICON(z)}<b>${z.label}</b><small>${Math.round(z.w * CM_PER_UNIT)} × ${Math.round(z.h * CM_PER_UNIT)} cm max</small>
+        ${ZONE_ICON(z, vh)}<b>${esc(z.label)}</b><small>${cmSize(z)} max</small>
       </button>`).join('');
+    $('#zoneTabs').innerHTML = zones.map((z) => `
+      <button type="button" class="zone-tab${z.id === active ? ' active' : ''}" data-z="${z.id}" aria-pressed="${z.id === active}">
+        ${esc(z.label)}${used.has(z.id) ? '<i class="zone-dot" aria-label="(utilisé)"></i>' : ''}
+      </button>`).join('');
+    const tabs = $('#zoneTabs'), tab = $('.active', tabs);
+    if (tab) tabs.scrollLeft = tab.offsetLeft - (tabs.offsetWidth - tab.offsetWidth) / 2;
+    $('#stageEmpty b').textContent = 'Dépose ton design ici';
+    $('#stageEmpty span').textContent = `${ZONES[active].label} · ${cmSize(ZONES[active])}`;
     highlightZone();
   }
 
   function highlightZone() {
-    const active = isEmb() ? (current()?.zone || state.embZone) : '';
+    const active = activeZone();
     $$('.js-zone', svg).forEach((r) => r.classList.toggle('on', r.dataset.z === active));
+    placeEmpty();
+    updateEmpty();
   }
 
-  function setEmbZone(id) {
-    state.embZone = id;
-    const l = current();
-    if (l) {
-      const z = EMB_ZONES[id];
-      l.zone = id;
-      l.x = z.x + z.w / 2; l.y = z.y + z.h / 2;
-      clampLayer(l);
-      updateLayerDom(l);
-      changed();
+  // l'invitation à déposer un fichier se place au centre de l'emplacement choisi
+  function placeEmpty() {
+    const box = $('#stageEmpty');
+    const z = ZONES?.[activeZone()];
+    if (!z) {
+      box.style.left = box.style.top = '';
+      if (!ZONES) { $('b', box).textContent = 'Glisse ton logo ici'; $('span', box).textContent = 'ou ajoute-le avec les outils du studio'; }
+      return;
     }
-    renderEmbZones();
+    const k = stageShirt.offsetWidth / 400;
+    box.style.left = `${stageShirt.offsetLeft + (z.x + z.w / 2) * k}px`;
+    box.style.top = `${stageShirt.offsetTop + (z.y + z.h / 2) * k}px`;
+  }
+
+  function setZone(id) {
+    const z = ZONES?.[id];
+    if (!z) return;
+    state.zone = id;
+    const l = current();
+    if (l && l.zone !== id) {
+      if (isEmb()) {
+        // broderie : l'élément sélectionné suit l'emplacement choisi
+        l.zone = id;
+        l.x = z.x + z.w / 2; l.y = z.y + z.h / 2;
+        clampLayer(l);
+        updateLayerDom(l);
+        changed();
+      } else select(null);
+    }
+    if (z.side !== state.side) switchSide(z.side);
+    renderZones();
   }
 
   /* ----- prix ----- */
   const totalQty = () => Object.values(state.sizes).reduce((a, b) => a + b, 0);
 
-  const usedZones = () => [...new Set(state.layers.map((l) => l.zone).filter((z) => EMB_ZONES[z]))];
+  const usedZones = () => [...new Set(state.layers.map((l) => l.zone).filter((z) => ZONES?.[z]))];
 
   function facesCount() {
-    if (isEmb()) return usedZones().length || 1;
+    if (ZONES) return usedZones().length || 1;
     const sides = new Set(state.layers.map((l) => l.side));
     if (sides.size) return sides.size;
     return state.places.has('Devant + dos') ? 2 : 1;
@@ -753,30 +941,80 @@
     const t = CFG.techniques[state.tech];
     const faces = facesCount();
     const qty = totalQty();
-    const base = a.base + (fit?.price || 0) + (mat?.price || 0) + t.perFace * faces;
-    const setup = t.setup * faces;
     const tier = [...CFG.tiers].sort((x, y) => y.min - x.min).find((x) => qty >= x.min);
     const off = tier ? tier.off : 0;
-    const total = qty ? (base * qty + setup) * (1 - off) : 0;
-    return { faces, qty, base, setup, off, total, unit: qty ? total / qty : base };
+    const creation = creationQuote(qty);
+
+    // article fournisseur : coût réel (impression comprise) + marge ; la remise ne touche que la marge
+    const cost = supplierCost(faces);
+    if (cost) {
+      const marge = margeOf(a);
+      const ship = shippingCost(a, qty);
+      const base = cost + marge;
+      const total = qty ? (cost + marge * (1 - off)) * qty + ship + creation.fee : 0;
+      return { faces, qty, base, setup: 0, ship, off, offMarge: true, creation, total, unit: qty ? total / qty : base };
+    }
+
+    const base = a.base + (fit?.price || 0) + (mat?.price || 0) + t.perFace * faces;
+    const setup = t.setup * faces;
+    const total = qty ? (base * qty + setup) * (1 - off) + creation.fee : 0;
+    return { faces, qty, base, setup, ship: 0, off, creation, total, unit: qty ? total / qty : base };
   }
+
+  // création du design : due dès qu'une idée est décrite, offerte à partir de `offerteDes` pièces
+  const hasIdea = () => !!($('#ideaText').value.trim() || state.inspo.length);
+  const creationPrice = (o) => `${o.aPartirDe ? 'dès ' : ''}${fmt(o.price)}`;
+  function creationQuote(qty) {
+    const offer = hasIdea() ? CFG.creation.offres.find((o) => o.id === state.creation) : null;
+    if (!offer || !qty) return { offer, fee: 0, free: false };
+    const free = CFG.creation.offerteDes > 0 && qty >= CFG.creation.offerteDes;
+    return { offer, fee: free ? 0 : offer.price, free };
+  }
+
+  // marge par pièce : celle de l'article, sinon la marge par défaut
+  const margeOf = (a) => a.marge ?? CFG.marge ?? 0;
+  // frais d'envoi d'une commande : 1er article + chaque article suivant
+  function shippingCost(a, qty) {
+    if (!qty) return 0;
+    const l = a.livraison || CFG.livraison;
+    return l.premier + l.suivant * (qty - 1);
+  }
+
+  // prix fournisseur d'une pièce (1 emplacement inclus, + surcoût par emplacement en plus)
+  function supplierCost(faces, a = art(), tech = state.tech) {
+    const emb = tech === 'broderie';
+    const cost = (emb && a.costBroderie) || a.cost;
+    if (!cost) return 0;
+    const extra = (emb ? a.costFaceBroderie ?? a.costFace : a.costFace) || 0;
+    return cost + extra * Math.max(0, faces - 1);
+  }
+  // prix « dès » d'un article (1 emplacement), sans livraison
+  const fromPrice = (a, tech) => {
+    const cost = supplierCost(1, a, tech);
+    if (cost) return cost + margeOf(a);
+    const t = CFG.techniques[tech];
+    return a.base + (t ? t.perFace : minPerFace());
+  };
 
   function specLine() {
     const a = art();
-    const fits = Object.keys(a.fits);
-    const fit = a.fits[state.fit];
     const mat = a.materials.find((m) => m.id === state.material);
-    const label = fits.length > 1 ? `${a.label} ${fit.label}` : a.label;
-    return `${label} · ${mat.name} · ${CFG.techniques[state.tech].name}`;
+    return `${articleName()}${a.model ? ` (${a.model})` : ''} · ${mat.name} · ${CFG.techniques[state.tech].name}`;
   }
 
   function techAdvice(q) {
     const t = CFG.techniques[state.tech];
     const imgs = state.layers.filter((l) => l.type === 'image');
-    const alt = (id, why) => `${why} <br><button type="button" class="advice-btn" data-tech="${id}">Passer en ${esc(CFG.techniques[id]?.name || id)}</button>`;
+    const alt = (id, why) => (techLocked(id) ? why : `${why} <br><button type="button" class="advice-btn" data-tech="${id}">Passer en ${esc(CFG.techniques[id]?.name || id)}</button>`);
     switch (state.tech) {
       case 'broderie':
-        return `Brodé uniquement sur le t-shirt <b>Cotton Heritage</b> (${palette().length} coloris). Emplacements : centre poitrine, cœur ou manches, ${t.maxCm || 12} cm max. Pas de photos ni de dégradés.`;
+        return `Brodé uniquement sur ${embAllowed().map((o) => {
+          const a = CFG.articles[o.article];
+          return `<b>${esc(a ? `${a.label}${o.fit && a.fits[o.fit] ? ` ${a.fits[o.fit].label}` : ''}` : o.article)}</b>`;
+        }).join(', ').replace(/, ([^,]*)$/, ' et $1') || 'nos t-shirts'} (${palette().length} coloris sur ce modèle). Emplacements : ${zoneList().map((z) => z.label.toLowerCase()).join(', ')}, ${t.maxCm || 12} cm max. Pas de photos ni de dégradés.`;
+      case 'dtg':
+        if (isDark(state.color.hex) && CFG.techniques.dtf) return alt('dtf', 'Sur un textile foncé, le DTG demande une sous-couche blanche : le <b>DTF</b> rend souvent plus éclatant.');
+        return 'L\'encre pénètre dans le coton : toucher invisible, photos et dégradés compris, dès 1 pièce.';
       case 'serigraphie':
         if (q.qty && q.qty < 20) return alt('dtf', `Pour <b>${q.qty} pièce${q.qty > 1 ? 's' : ''}</b>, les frais d'écran pèsent lourd : le DTF revient souvent moins cher.`);
         return 'Le meilleur rapport qualité/prix en série, avec des couleurs unies très éclatantes.';
@@ -784,7 +1022,7 @@
         if (imgs.length) return alt('dtf', 'Le flocage convient aux <b>textes et formes simples</b>, pas aux logos détaillés ou aux photos.');
         return 'Parfait pour les noms, numéros et textes en 1 ou 2 couleurs.';
       default:
-        if (q.qty >= 20 && CFG.techniques.serigraphie) return alt('serigraphie', `À partir de <b>20 pièces</b>, la sérigraphie devient souvent plus rentable.`);
+        if (q.qty >= 20 && CFG.techniques.serigraphie && !techLocked('serigraphie')) return alt('serigraphie', `À partir de <b>20 pièces</b>, la sérigraphie devient souvent plus rentable.`);
         return 'Le plus polyvalent : toutes les couleurs, photos et dégradés, dès 1 pièce.';
     }
   }
@@ -802,8 +1040,8 @@
     const a = art();
     const mat = a.materials.find((m) => m.id === state.material);
     const sides = new Set(state.layers.map((l) => l.side));
-    const where = isEmb()
-      ? (usedZones().map((z) => EMB_ZONES[z].label.toLowerCase()).join(' + ') || 'à définir')
+    const where = ZONES
+      ? (usedZones().map((z) => ZONES[z].label.toLowerCase()).join(' + ') || 'à définir')
       : sides.size === 2 ? 'devant + dos' : sides.has('back') ? 'dos' : sides.has('front') ? 'devant' : (q.faces === 2 ? 'devant + dos' : 'à définir');
     const visuals = state.layers.length
       ? `${state.layers.length} élément${state.layers.length > 1 ? 's' : ''}`
@@ -811,7 +1049,7 @@
     $('#orderSummary').innerHTML = `
       <div class="sum-head"><span>Ta commande</span><a href="#studio">Modifier</a></div>
       <dl>
-        <div><dt>Article</dt><dd>${esc(Object.keys(a.fits).length > 1 ? `${a.label} ${a.fits[state.fit].label}` : a.label)}</dd></div>
+        <div><dt>Article</dt><dd>${esc(articleName())}${a.model ? ` <small>${esc(a.model)}</small>` : ''}</dd></div>
         <div><dt>Couleur</dt><dd><span class="cdot" style="background:${state.color.hex}"></span>${esc(state.color.name)}</dd></div>
         <div><dt>Matière</dt><dd>${esc(mat.name)}</dd></div>
         <div><dt>Marquage</dt><dd>${esc(t.name)} · ${where}</dd></div>
@@ -824,6 +1062,9 @@
     const parts = [`${q.faces} face${q.faces > 1 ? 's' : ''} marquée${q.faces > 1 ? 's' : ''}`];
     if (q.setup) parts.push(`${fmt(q.setup)} de mise en route`);
     if (q.off) parts.push(`${Math.round(q.off * 100)} % de remise quantité`);
+    if (q.ship) parts.push(`${fmt(q.ship)} de livraison`);
+    if (q.creation.fee) parts.push(`${creationPrice(q.creation.offer)} de création du design`);
+    if (q.creation.free) parts.push('création du design offerte');
     $('#estNote').textContent = q.qty ? `Inclut ${parts.join(', ')}.` : 'Ajoute des tailles pour calculer ton total.';
     $('#tiers').innerHTML = CFG.tiers.map((x) => `<span class="tier${q.off === x.off && q.qty >= x.min ? ' on' : ''}">${x.min}+ pièces · −${Math.round(x.off * 100)} %</span>`).join('');
   }
@@ -834,7 +1075,7 @@
   function setWidth(l, w) {
     l.w = clamp(w, isEmb() ? 8 : 16, maxWidth(l));
     l.h = l.w * l.aspect;
-    if (isEmb()) clampLayer(l);
+    if (ZONES) clampLayer(l);
   }
 
   function addLayer(l) {
@@ -926,28 +1167,30 @@
     state.selected = id;
     const l = current();
     if (l && l.side !== state.side) switchSide(l.side);
-    if (l?.zone && isEmb()) state.embZone = l.zone;
+    if (l?.zone && ZONES?.[l.zone]) state.zone = l.zone;
     renderSelection();
     renderLayersList();
-    renderEmbZones();
+    renderZones();
   }
 
   function renderLayersList() {
     const list = $('#layersList');
     list.innerHTML = state.layers.map((l) => `
       <button class="layer-row${l.id === state.selected ? ' active' : ''}" data-id="${l.id}" type="button">
-        <img src="${l.src}" alt=""><span>${esc(l.name)}</span><em>${l.side === 'front' ? 'Devant' : 'Dos'}</em>
+        <img src="${l.src}" alt=""><span>${esc(l.name)}</span><em>${esc(ZONES?.[l.zone]?.label || (l.side === 'front' ? 'Devant' : 'Dos'))}</em>
       </button>`).join('');
     $$('.layer-row', list).forEach((b) => b.addEventListener('click', () => select(b.dataset.id)));
   }
 
   function updateEmpty() {
-    $('#stageEmpty').classList.toggle('hidden', state.layers.some((l) => l.side === state.side));
+    const z = activeZone();
+    $('#stageEmpty').classList.toggle('hidden', state.layers.some((l) => l.side === state.side && (!z || l.zone === z)));
   }
 
   let changeTimer;
   function changed() {
     renderLayersList();
+    if (ZONES) renderZones();
     updateEmpty();
     stage.classList.toggle('has-layers', state.layers.some((l) => l.side === state.side));
     refresh();
@@ -1061,7 +1304,7 @@
         const sideCount = state.layers.filter((l) => l.side === state.side).length;
         const layer = {
           id: uid(), type: 'image', name: file.name, file, src, orig: src, aspect,
-          w, h: w * aspect, rot: 0, side: state.side, zone: state.embZone,
+          w, h: w * aspect, rot: 0, side: state.side, zone: state.zone,
           x: PRINT.x + PRINT.w / 2 + sideCount * 6,
           y: clamp(PRINT.y + 30 + (w * aspect) / 2 + sideCount * 6, PRINT.y, PRINT.y + PRINT.h),
         };
@@ -1183,7 +1426,7 @@
     if (w * aspect > 90) w = 90 / aspect;
     const layer = {
       id: uid(), type: 'text', name: `« ${txt} » · ${f.label}`, text: txt, font: f.label, color,
-      src: t.toDataURL('image/png'), aspect, w, h: w * aspect, rot: 0, side: state.side, zone: state.embZone,
+      src: t.toDataURL('image/png'), aspect, w, h: w * aspect, rot: 0, side: state.side, zone: state.zone,
       x: PRINT.x + PRINT.w / 2, y: PRINT.y + PRINT.h * 0.55,
     };
     placeInZone(layer);
@@ -1191,12 +1434,16 @@
     input.value = '';
   }
 
-  // en broderie : l'élément prend toute la place de l'emplacement choisi
+  // avec emplacements : l'élément est posé dans celui choisi (en broderie, il en prend toute la place)
   function placeInZone(l) {
-    if (!isEmb()) return;
+    if (!ZONES) return;
     const z = zoneFor(l);
-    l.w = maxWidth(l);
-    l.x = z.x + z.w / 2; l.y = z.y + z.h / 2;
+    l.zone = z.id;
+    l.side = z.side;
+    l.w = isEmb() ? maxWidth(l) : Math.min(l.w, maxWidth(l));
+    l.h = l.w * l.aspect;
+    l.x = z.x + z.w / 2;
+    l.y = isEmb() ? z.y + z.h / 2 : z.y + Math.min(z.h / 2, l.h / 2 + 30);
     clampLayer(l);
   }
 
@@ -1376,7 +1623,7 @@
       if (!ls.length) return 'rien';
       return ls.map((l) => (l.type === 'text' ? `texte « ${l.text} » (${l.font}, ${l.color})` : `logo ${l.name}${l.bgRemoved ? ' (fond retiré)' : ''}`)
         + ` ≈ ${Math.round(l.w * CM_PER_UNIT)} cm`
-        + (isEmb() && EMB_ZONES[l.zone] ? ` [broderie ${EMB_ZONES[l.zone].label.toLowerCase()}]` : '')).join(' ; ');
+        + (ZONES?.[l.zone] ? ` [${isEmb() ? 'broderie ' : ''}${ZONES[l.zone].label.toLowerCase()}]` : '')).join(' ; ');
     };
     const lines = [
       `Nouvelle demande — ${CFG.brand}`,
@@ -1401,6 +1648,7 @@
       if (state.styles.size) lines.push(`Style : ${[...state.styles].join(', ')}`);
       if (state.places.size) lines.push(`Emplacement : ${[...state.places].join(', ')}`);
       if (state.inspo.length) lines.push(`Images d'inspiration : ${state.inspo.length}`);
+      if (q.creation.offer) lines.push(`Création demandée : ${q.creation.offer.name} (${q.creation.free ? 'offerte' : creationPrice(q.creation.offer)})`);
     }
     const notes = $('#fNotes').value.trim();
     if (notes) lines.push('', `Notes : ${notes}`);
@@ -1477,8 +1725,11 @@
     const m = $('#modal');
     $('#modalImg').src = src;
     $('#modalTitle').textContent = sent ? 'Demande envoyée !' : 'Presque fini !';
+    const paidDesign = quote().creation.fee > 0;
     $('#modalText').textContent = sent
-      ? 'On revient vers toi sous 24h avec ta maquette finale et ton devis.'
+      ? (paidDesign
+        ? 'On revient vers toi sous 24h avec ton devis et le lien de paiement de la création.'
+        : 'On revient vers toi sous 24h avec ta maquette finale et ton devis.')
       : 'Ton email est prêt : ajoute la maquette qui vient d\'être téléchargée (et ton logo) puis envoie-le. On te répond sous 24h.';
     m.hidden = false;
     $('#modalClose').focus();
@@ -1508,6 +1759,11 @@
       $('#modalPay').hidden = false;
     }
     $('#year').textContent = new Date().getFullYear();
+
+    // chiffres du hero tirés de la config : ils suivent les articles ajoutés ou retirés
+    const most = Math.max(COLORS.length, ...Object.values(CFG.articles).map((a) => a.colors?.length || 0));
+    $('#statTech').textContent = Object.keys(CFG.techniques).length;
+    $('#statColors').textContent = most >= 20 ? `${Math.floor(most / 10) * 10}+` : most;
   }
 
   /* ------------------------------------------------------------------------

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atelier CréerSon — Textile personnalisé, imprimé ou brodé</title>
-  <meta name="description" content="T-shirts, sweats, tote bags, casquettes et plus, personnalisés à la demande : envoie ton logo ou décris ton idée, choisis la coupe, la matière et la technique (DTF, sérigraphie, broderie, flocage) et vois le rendu en direct.">
+  <meta name="description" content="T-shirts, manches longues, sweats à capuche et tote bags personnalisés dès 1 pièce : envoie ton logo ou décris ton idée, choisis le modèle, la couleur et la technique (DTF, DTG, sérigraphie, broderie, flocage) et vois le rendu en direct.">
   <meta name="theme-color" content="#f3efe6">
   <meta property="og:title" content="Atelier CréerSon — Textile personnalisé, imprimé ou brodé">
   <meta property="og:description" content="Personnalise tes textiles en direct : logo, texte, coupe, matière, broderie ou impression.">
@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Archivo+Black&family=Bebas+Neue&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:ital,wght@1,700&family=Space+Grotesk:wght@700&family=Syne:wght@800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
 
@@ -49,8 +49,8 @@
         </div>
         <ul class="hero-stats fade-up">
           <li><b>24h</b><span>pour ton devis</span></li>
-          <li><b>4</b><span>techniques</span></li>
-          <li><b>8</b><span>coloris</span></li>
+          <li><b id="statTech">5</b><span>techniques</span></li>
+          <li><b id="statColors">30+</b><span>coloris</span></li>
           <li><b>1</b><span>pièce minimum</span></li>
         </ul>
       </div>
@@ -96,7 +96,7 @@
           <span class="step-num">03</span>
           <div class="step-icon"><svg viewBox="0 0 48 48"><path d="M6 14h24v18H6zM30 20h7l5 6v6H30M14 36a3 3 0 1 0 0 .1M34 36a3 3 0 1 0 0 .1"/></svg></div>
           <h3>On fabrique &amp; on livre</h3>
-          <p>Tu reçois ta maquette et ton devis sous 24h. Tu valides, on fabrique, tu portes.</p>
+          <p>Tu reçois ton devis sous 24h. Tu valides, on fabrique, tu portes.</p>
         </article>
       </div>
     </section>
@@ -149,6 +149,7 @@
               <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></svg><span>Maquette</span>
             </button>
           </div>
+          <div class="zone-tabs" id="zoneTabs" aria-label="Emplacement" hidden></div>
 
           <div class="stage-wrap">
             <div class="stage-shirt" id="stageShirt"></div>
@@ -183,7 +184,7 @@
           <div class="pane active" data-pane="product">
             <div class="field">
               <label>Article</label>
-              <div class="opt-grid three" id="articleOpts"></div>
+              <div class="opt-grid two" id="articleOpts"></div>
             </div>
             <div class="field" id="fitField">
               <label>Coupe</label>
@@ -207,9 +208,9 @@
           <!-- Mode logo -->
           <div class="pane" data-pane="logo">
             <div class="field emb-field" id="embField" hidden>
-              <label>Emplacement de la broderie</label>
+              <label id="embLabel">Emplacement de la broderie</label>
               <div class="emb-zones" id="embZones"></div>
-              <p class="emb-note">Choisis l'emplacement avant d'ajouter ton logo, ou clique dessus pour y déplacer l'élément sélectionné. Chaque emplacement brodé compte comme une face. Pas de broderie au dos.</p>
+              <p class="emb-note" id="embNote"></p>
             </div>
             <label class="dropzone" id="dropzone">
               <input type="file" id="fileInput" accept="image/*" multiple hidden>
@@ -257,6 +258,11 @@
               <textarea id="ideaText" rows="5" placeholder="Ex : des t-shirts pour l'EVG de Thomas, style rétro années 80, un flamant rose devant et la date 14.06.2027 au dos…"></textarea>
             </div>
             <div class="field">
+              <label>Création du design</label>
+              <div class="opt-list" id="creationOpts"></div>
+              <p class="emb-note" id="creationNote"></p>
+            </div>
+            <div class="field">
               <label>Style recherché</label>
               <div class="chips" id="styleChips"></div>
             </div>
@@ -286,7 +292,7 @@
         <div class="order-intro">
           <p class="eyebrow reveal"><span class="sq"></span> Dernière étape</p>
           <h2 class="section-title reveal">On s'occupe <span class="hl">du reste.</span></h2>
-          <p class="lead reveal">Quelques infos et c'est parti : tu reçois ta maquette finale et ton devis sous 24h. Aucun paiement maintenant.</p>
+          <p class="lead reveal">Quelques infos et c'est parti : tu reçois ton devis sous 24h, avec ta maquette si ton visuel est prêt. Aucun paiement maintenant.</p>
           <div class="mini-preview reveal" id="miniPreview">
             <figure><img id="miniFront" alt="Aperçu devant"><figcaption>Devant</figcaption></figure>
             <figure><img id="miniBack" alt="Aperçu dos"><figcaption>Dos</figcaption></figure>
@@ -332,14 +338,15 @@
       <p class="eyebrow reveal"><span class="sq"></span> Questions fréquentes</p>
       <h2 class="section-title reveal">Tout ce que tu <span class="hl">te demandes.</span></h2>
       <div class="faq-list">
-        <details class="reveal"><summary>Quelle technique choisir ?</summary><p><b>DTF</b> : toutes les couleurs, photos et dégradés, dès 1 pièce. <b>Sérigraphie</b> : couleurs éclatantes et très résistantes, la plus rentable à partir d'environ 20 pièces. <b>Broderie</b> : rendu premium et durable, idéal pour un logo jusqu'à 12 cm (cœur, centre poitrine, manche). Dans le studio, elle se fait sur le t-shirt Cotton Heritage ; pour broder un sweat, une casquette ou un autre article, précise-le dans ta demande. <b>Flocage</b> : parfait pour les noms, numéros et textes en 1 à 2 couleurs. Le studio te conseille automatiquement.</p></details>
-        <details class="reveal"><summary>Quelles matières proposez-vous ?</summary><p>Pour les t-shirts, le <b>coton peigné 180 g</b> est le classique doux et polyvalent. Le <b>coton bio</b> offre la même douceur avec une certification biologique. Le <b>coton épais 240 g</b> donne un tombé premium, parfait en oversize. Le <b>polyester technique</b> est idéal pour le sport, et le <b>tri-blend</b> donne un effet chiné vintage très doux. Les sweats existent en <b>molleton</b> classique, bio ou extra-épais, et les tote bags en coton naturel ou toile épaisse.</p></details>
+        <details class="reveal"><summary>Quelle technique choisir ?</summary><p><b>DTF</b> : toutes les couleurs, photos et dégradés, dès 1 pièce, sur clair comme sur foncé. <b>DTG</b> : l'encre pénètre dans le coton pour un toucher invisible, idéal sur textile clair. <b>Sérigraphie</b> : couleurs éclatantes et très résistantes, la plus rentable à partir d'environ 20 pièces. <b>Broderie</b> : rendu premium et durable, idéal pour un logo jusqu'à 12 cm (poitrine, manches ou poignets selon le modèle, avant ou arrière sur les tote bags). Elle est proposée sur nos t-shirts, manches longues, sweats à capuche et tote bags ; pour broder une casquette ou un autre article, précise-le dans ta demande. <b>Flocage</b> : parfait pour les noms, numéros et textes en 1 à 2 couleurs. Le studio te conseille automatiquement.</p></details>
+        <details class="reveal"><summary>Quelles matières proposez-vous ?</summary><p>Pour les t-shirts, le <b>coton peigné 180 g</b> est le classique doux et polyvalent. Le <b>coton bio</b> offre la même douceur avec une certification biologique. Le <b>coton épais 240 g</b> donne un tombé premium, parfait en oversize. Le <b>polyester technique</b> est idéal pour le sport, et le <b>tri-blend</b> donne un effet chiné vintage très doux. On propose aussi le <b>Gildan Softstyle</b> (coton ring-spun léger, jusqu'au 5XL), le <b>Gildan Ultra Cotton</b> en manches longues (203 g, bords-côtes aux poignets) et le sweat à capuche <b>Gildan Heavy Blend</b> (molleton 50/50 gratté, poche kangourou). Côté tote bags : le <b>Westford Mill</b> en coton coloré à longues anses, ou l'<b>Econscious</b> en coton bio épais à soufflet.</p></details>
         <details class="reveal"><summary>Vous faites d'autres articles que ceux du studio ?</summary><p>Oui. Casquettes, polos, vestes, tabliers, textiles pro… on travaille selon ta demande. Décris ton projet dans « Mon idée » ou dans le champ « Un dernier mot » et on te fait un devis.</p></details>
-        <details class="reveal"><summary>Quels fichiers puis-je envoyer ?</summary><p>PNG (idéalement avec fond transparent), JPG, SVG ou WEBP. Ton logo est flou ou en basse résolution ? Pas de souci, on le redessine proprement avant la fabrication.</p></details>
+        <details class="reveal"><summary>Quels fichiers puis-je envoyer ?</summary><p>PNG (idéalement avec fond transparent), JPG, SVG ou WEBP. Ton logo est flou ou en basse résolution ? On peut le retoucher avant la fabrication : choisis « Retouche » dans « Mon idée » (10 €, offert dès 10 pièces).</p></details>
         <details class="reveal"><summary>Je n'ai pas de logo, c'est possible ?</summary><p>Bien sûr. Choisis « Mon idée » dans le studio, décris ce que tu veux et ajoute quelques images d'inspiration. On te propose une création.</p></details>
+        <details class="reveal"><summary>Combien coûte la création du design ?</summary><p><b>Retouche</b> : 10 €. <b>Design simple</b> : 25 €. <b>Design sur mesure</b> : à partir de 50 €. La création est <b>offerte dès 10 pièces</b>. 2 séries de retouches sont incluses, puis 10 € par série. Le design sert à imprimer ta commande ; le fichier final pour un autre usage est en supplément (20 €). Placer un logo déjà prêt reste gratuit.</p></details>
         <details class="reveal"><summary>Les prix affichés sont-ils définitifs ?</summary><p>Ce sont des estimations indicatives TTC. Le prix définitif figure dans ton devis, envoyé sous 24h, selon la taille réelle du visuel et le nombre de couleurs.</p></details>
-        <details class="reveal"><summary>Combien de temps ça prend ?</summary><p>Tu reçois ta maquette et ton devis sous 24h. Après ta validation, compte en général 5 à 10 jours ouvrés selon la technique (la broderie et la sérigraphie demandent une préparation).</p></details>
-        <details class="reveal"><summary>Je dois payer maintenant ?</summary><p>Non. Ta demande est gratuite et sans engagement : tu ne paies qu'après avoir validé la maquette et le devis.</p></details>
+        <details class="reveal"><summary>Combien de temps ça prend ?</summary><p>Tu reçois ton devis sous 24h, avec ta maquette si ton visuel est prêt ; une création démarre après validation du devis. Après validation de la maquette, compte en général 5 à 10 jours ouvrés selon la technique (la broderie et la sérigraphie demandent une préparation).</p></details>
+        <details class="reveal"><summary>Je dois payer maintenant ?</summary><p>Non. Ta demande est gratuite et sans engagement. Si ton visuel est prêt, tu paies après avoir validé la maquette et le devis. Si tu demandes une création payante, tu la règles après le devis, avant qu'on commence.</p></details>
       </div>
     </section>
   </main>
@@ -379,7 +386,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
 
-  <script src="js/config.js?v=3"></script>
-  <script src="js/app.js?v=3"></script>
+  <script src="js/config.js?v=4"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>
